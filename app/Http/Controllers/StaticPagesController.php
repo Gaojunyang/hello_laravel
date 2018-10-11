@@ -11,8 +11,11 @@ class StaticPagesController extends Controller
         return view('static_pages/home');
     }
 
-    public function help()
+    public function help(Request $request)
     {
+        echo $request->path().PHP_EOL;
+        echo $request->fullUrl().PHP_EOL;
+        echo $request->method().PHP_EOL;
         return view('static_pages/help');
     }
 
