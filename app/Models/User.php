@@ -44,6 +44,18 @@ class User extends Authenticatable
         });
     }
 
+
+    /**
+     * 一对多
+     * 一个用户有多条微博
+     * 需要注意的一点是，由于一个用户拥有多条微博，因此在用户模型中我们使用了微博动态的复数形式 statuses 来作为定义的函数名
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function statuses()
+    {
+        return $this->hasMany(Status::class);
+    }
+
     /**
      * 获取用户头像
      * @param string $size
@@ -58,5 +70,11 @@ class User extends Authenticatable
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPassword($token));
+    }
+
+
+    public function feed()
+    {
+        return $this->statuses()->orderBy('created_at', 'desc');
     }
 }
